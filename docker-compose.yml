@@ -10,14 +10,14 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://chat_user:chat_password@db:5432/chatdb
+      DATABASE_URL: ${DATABASE_URL}
 
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: chat_user
-      POSTGRES_PASSWORD: chat_password
-      POSTGRES_DB: chatdb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     volumes:

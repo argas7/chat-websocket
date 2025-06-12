@@ -1,7 +1,17 @@
 from fastapi import FastAPI
+from prisma import Prisma
 import uvicorn
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+prisma = Prisma()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await prisma.connect()
+    yield
+    await prisma.disconnect()
+
+app = FastAPI(lifespan=lifespan)
 
 @app.get("/")
 async def root():
