@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  app:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ./app:/app/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://chat_user:chat_password@db:5432/chatdb
+
   db:
     image: postgres:15
     environment:
